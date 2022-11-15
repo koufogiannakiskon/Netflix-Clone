@@ -3,7 +3,7 @@ import axios from './axios.js';
 import './Row.css';
 const baseURL = "https://image.tmdb.org/t/p/original/";
 
-function Row({ title, fetchUrl }) {
+function Row({ title, fetchUrl, isLargeRow }) {
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
@@ -18,12 +18,13 @@ function Row({ title, fetchUrl }) {
     return (
         <div className="row">
             <h2>{title}</h2>
-            <div className='row__posters'>
+            <div className="row__posters">
                 {/*row poster*/}
                 {movies.map((movie) => (
                     <img
-                        className="row__poster"
-                        src={`${baseURL}${movie.poster_path}`}
+                        key={movie.id}
+                        className={`row__poster ${isLargeRow && "row__posterLarge"}`}
+                        src={`${baseURL}${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
                         alt={movie.name} />
                 ))}
             </div>
